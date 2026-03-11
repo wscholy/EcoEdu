@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에코에듀 — 선생님을 위한 환경교육 플랫폼</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Gmarket+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================
+   DESIGN TOKENS
+============================ */
+:root {
+  /* Sky & Ocean blues — primary */
+  --sky-100: #e0f4ff;
+  --sky-200: #b8e6ff;
+  --sky-300: #7ed0f7;
+  --sky-400: #38b6f0;
+  --sky-500: #0ea5e9;
+  --sky-600: #0284c7;
+  --sky-700: #0369a1;
+
+  /* Warm accent — energy */
+  --sun-100: #fff8e0;
+  --sun-300: #fde68a;
+  --sun-400: #fbbf24;
+  --sun-500: #f59e0b;
+
+  /* Green — nature */
+  --green-100: #e8fdf0;
+  --green-300: #6ee7b7;
+  --green-400: #34d399;
+  --green-500: #10b981;
+  --green-600: #059669;
+
+  /* Coral accent */
+  --coral-400: #fb7185;
+  --coral-500: #f43f5e;
+
+  /* Purple accent */
+  --purple-300: #c4b5fd;
+  --purple-500: #8b5cf6;
+
+  /* Neutrals */
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+  --shadow-lg: 0 16px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-xl: 0 24px 64px rgba(0,0,0,0.12);
+  --shadow-sky: 0 8px 24px rgba(14,165,233,0.25);
+  --shadow-sun: 0 8px 24px rgba(245,158,11,0.25);
+  --shadow-green: 0 8px 24px rgba(16,185,129,0.25);
+}
+
+/* ============================
+   RESET & BASE
+============================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--gray-50);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ============================
+   NAVIGATION
+============================ */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  height: 68px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226,232,240,0.8);
+  display: flex; align-items: center;
+  padding: 0 2rem;
+  gap: 2rem;
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 0.5rem;
+  text-decoration: none; flex-shrink: 0;
+}
+.nav-logo-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--sky-400), var(--sky-600));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow-sky);
+}
+.nav-logo-text {
+  font-family: 'Gmarket Sans', sans-serif;
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--sky-600);
+}
+.nav-logo-text span { color: var(--sun-500); }
+
+.nav-menu {
+  display: flex; align-items: center; gap: 0.25rem;
+  list-style: none; flex: 1;
+}
+.nav-menu a {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-size: 0.875rem; font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.18s ease;
+  cursor: pointer;
+}
+.nav-menu a:hover { background: var(--sky-100); color: var(--sky-600); }
+.nav-menu a.active { background: var(--sky-100); color: var(--sky-600); font-weight: 700; }
+
+.nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+
+.btn { 
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-full);
+  border: none; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.875rem; font-weight: 700;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn-sky {
+  background: linear-gradient(135deg, var(--sky-400), var(--sky-600));
+  color: white;
+  box-shadow: var(--shadow-sky);
+}
+.btn-sky:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(14,165,233,0.35); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--sky-600);
+  border: 1.5px solid var(--sky-300);
+}
+.btn-outline:hover { background: var(--sky-100); }
+
+.btn-white {
+  background: white;
+  color: var(--sky-600);
+  box-shadow: var(--shadow-md);
+}
+.btn-white:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.btn-sun {
+  background: linear-gradient(135deg, var(--sun-400), var(--sun-500));
+  color: white;
+  box-shadow: var(--shadow-sun);
+}
+.btn-sun:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(245,158,11,0.35); }
+
+.btn-green {
+  background: linear-gradient(135deg, var(--green-400), var(--green-600));
+  color: white;
+  box-shadow: var(--shadow-green);
+}
+.btn-green:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(16,185,129,0.35); }
+
+.btn-lg { padding: 0.875rem 2rem; font-size: 1rem; }
+.btn-sm { padding: 0.4rem 0.875rem; font-size: 0.8rem; }
+
+/* ============================
+   HERO SECTION
+============================ */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #f0f9ff 0%, #e0f4ff 30%, #f8fafc 60%, #fff8e0 100%);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center;
+  padding: 80px 2rem 0;
+}
+
+.hero-shapes {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.45;
+}
+.shape-1 { width: 500px; height: 500px; background: var(--sky-200); top: -100px; right: -100px; animation: float 8s ease-in-out infinite; }
+.shape-2 { width: 350px; height: 350px; background: var(--sun-300); bottom: -50px; left: -80px; animation: float 10s ease-in-out infinite 2s; }
+.shape-3 { width: 280px; height: 280px; background: var(--green-300); top: 30%; right: 20%; animation: float 7s ease-in-out infinite 1s; opacity: 0.3; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Floating deco elements */
+.deco-dots {
+  position: absolute;
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  background-image: radial-gradient(circle, var(--sky-300) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.15;
+}
+
+.hero-inner {
+  max-width: 1280px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+  position: relative; z-index: 1;
+  padding-bottom: 80px;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: white;
+  border: 1.5px solid var(--sky-200);
+  color: var(--sky-600);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem; font-weight: 700;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  animation: slideDown 0.6s ease both;
+}
+
+.hero-badge-dot {
+  width: 8px; height: 8px;
+  background: var(--green-400);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.3); }
+}
+
+.hero-title {
+  font-family: 'Gmarket Sans', sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--gray-800);
+  margin-bottom: 1.25rem;
+  animation: slideDown 0.6s ease 0.1s both;
+}
+
+.hero-title .highlight-sky {
+  color: var(--sky-500);
+  position: relative;
+}
+.hero-title .highlight-sky::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0;
+  height: 6px;
+  background: var(--sky-200);
+  border-radius: 3px;
+  z-index: -1;
+}
+
+.hero-title .highlight-sun { color: var(--sun-500); }
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.85;
+  margin-bottom: 2.5rem;
+  animation: slideDown 0.6s ease 0.2s both;
+}
+
+.hero-cta {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  margin-bottom: 3rem;
+  animation: slideDown 0.6s ease 0.3s both;
+}
+
+.hero-stats {
+  display: flex; gap: 2rem;
+  animation: slideDown 0.6s ease 0.4s both;
+}
+.hero-stat { display: flex; flex-direction: column; }
+.hero-stat-num {
+  font-family: 'Gmarket Sans', sans-serif;
+  font-size: 1.75rem; font-weight: 700;
+  color: var(--sky-600);
+}
+.hero-stat-label {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+/* Hero visual — dashboard preview */
+.hero-visual {
+  animation: slideLeft 0.8s ease 0.3s both;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.dashboard-preview {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(226,232,240,0.6);
+  position: relative;
+}
+
+.dp-header {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.dp-dots { display: flex; gap: 5px; }
+.dp-dot {
+  width: 11px; height: 11px; border-radius: 50%;
+}
+.dp-dot-red { background: #fc6058; }
+.dp-dot-yellow { background: #fec02f; }
+.dp-dot-green { background: #2bc840; }
+.dp-title { margin-left: 0.5rem; font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+
+.dp-search {
+  display: flex; align-items: center; gap: 0.5rem;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.82rem; color: var(--text-muted);
+}
+
+.lifecycle-track {
+  display: flex; gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+.lifecycle-track::-webkit-scrollbar { display: none; }
+
+.lc-mini {
+  flex-shrink: 0;
+  padding: 0.6rem 0.875rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.lc-mini.active { transform: scale(1.05); box-shadow: var(--shadow-md); }
+.lc-mini-icon { font-size: 1.4rem; display: block; margin-bottom: 0.2rem; }
+.lc-mini-label { font-size: 0.68rem; font-weight: 700; display: block; }
+
+.lc-a { background: linear-gradient(135deg, #e0f4ff, #b8e6ff); color: var(--sky-700); }
+.lc-b { background: linear-gradient(135deg, #fff8e0, #fde68a); color: #92400e; }
+.lc-c { background: linear-gradient(135deg, #e8fdf0, #6ee7b7); color: var(--green-600); }
+.lc-d { background: linear-gradient(135deg, #f3e8ff, #c4b5fd); color: #6d28d9; }
+.lc-e { background: linear-gradient(135deg, #fff1f2, #fda4af); color: #be123c; }
+
+.dp-materials {
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+
+.dp-mat-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-100);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.dp-mat-row:hover { border-color: var(--sky-200); background: var(--sky-100); }
+
+.dp-mat-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.mi-sky { background: var(--sky-100); }
+.mi-green { background: var(--green-100); }
+.mi-sun { background: var(--sun-100); }
+
+.dp-mat-info { flex: 1; min-width: 0; }
+.dp-mat-name { font-size: 0.78rem; font-weight: 600; color: var(--gray-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dp-mat-meta { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.1rem; }
+
+.dp-dl-btn {
+  background: var(--sky-100);
+  color: var(--sky-600);
+  border: none; border-radius: var(--radius-sm);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.68rem; font-weight: 700;
+  cursor: pointer; flex-shrink: 0;
+  font-family: inherit;
+}
+
+/* Floating card */
+.float-card {
+  position: absolute;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 0.875rem 1.1rem;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--gray-100);
+  animation: floatCard 3s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.float-card-1 {
+  top: -24px; right: -20px;
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.78rem; font-weight: 700; color: var(--gray-700);
+}
+.fc-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green-400); }
+
+.float-card-2 {
+  bottom: -20px; left: -20px;
+  font-size: 0.78rem;
+  animation-delay: 1.5s;
+}
+.fc2-num { font-family: 'Gmarket Sans', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--sun-500); }
+.fc2-label { color: var(--text-muted); font-size: 0.72rem; }
+
+/* Wave divider */
+.wave-divider {
+  line-height: 0;
+  position: relative;
+  margin-top: -2px;
+}
+.wave-divider svg { display: block; width: 100%; }
+
+/* ============================
+   SECTIONS COMMON
+============================ */
+section { padding: 5.5rem 2rem; }
+
+.container { max-width: 1280px; margin: 0 auto; }
+
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.875rem;
+}
+.eyebrow-sky { color: var(--sky-500); }
+.eyebrow-green { color: var(--green-500); }
+.eyebrow-sun { color: var(--sun-500); }
+
+.section-title {
+  font-family: 'Gmarket Sans', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--gray-800);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-top: 0.75rem;
+}
+
+/* ============================
+   LIFECYCLE SECTION
+============================ */
+.lifecycle-section {
+  background: white;
+}
+
+.lifecycle-section .container { display: flex; gap: 5rem; align-items: flex-start; }
+
+.lifecycle-left { flex: 0 0 360px; }
+.lifecycle-right { flex: 1; }
+
+.lifecycle-intro { margin-bottom: 2rem; }
+
+.lc-count-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--sky-100);
+  color: var(--sky-600);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem; font-weight: 700;
+  margin-top: 1.5rem;
+}
+
+.lifecycle-nav {
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+
+.lc-nav-btn {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  background: var(--gray-50);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+.lc-nav-btn::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+  transition: all 0.2s;
+}
+
+.lc-nav-btn:hover, .lc-nav-btn.active {
+  background: white;
+  box-shadow: var(--shadow-md);
+  border-color: var(--gray-100);
+}
+
+.lc-nav-btn.active { border-color: var(--sky-200); }
+
+/* Per lifecycle colors */
+.lc-0::before { background: var(--sky-400); }
+.lc-1::before { background: var(--sun-400); }
+.lc-2::before { background: var(--green-400); }
+.lc-3::before { background: var(--purple-500); }
+.lc-4::before { background: var(--coral-400); }
+
+.lc-nav-btn.active.lc-0 { border-color: var(--sky-300); background: var(--sky-100); }
+.lc-nav-btn.active.lc-1 { border-color: var(--sun-300); background: var(--sun-100); }
+.lc-nav-btn.active.lc-2 { border-color: var(--green-300); background: var(--green-100); }
+.lc-nav-btn.active.lc-3 { border-color: var(--purple-300); background: #f5f3ff; }
+.lc-nav-btn.active.lc-4 { border-color: var(--coral-400); background: #fff1f2; }
+
+.lc-nav-icon {
+  font-size: 2rem; flex-shrink: 0;
+  width: 50px; height: 50px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+}
+.lc-0 .lc-nav-icon { background: var(--sky-100); }
+.lc-1 .lc-nav-icon { background: var(--sun-100); }
+.lc-2 .lc-nav-icon { background: var(--green-100); }
+.lc-3 .lc-nav-icon { background: #f5f3ff; }
+.lc-4 .lc-nav-icon { background: #fff1f2; }
+
+.lc-nav-text { flex: 1; }
+.lc-nav-name { font-size: 0.95rem; font-weight: 700; color: var(--gray-700); }
+.lc-nav-age { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; }
+
+.lc-nav-count {
+  font-size: 0.78rem; font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: white;
+  color: var(--text-muted);
+}
+
+/* Lifecycle Content Panel */
+.lifecycle-panel {
+  position: sticky; top: 88px;
+}
+
+.lc-panel-card {
+  display: none;
+}
+.lc-panel-card.active {
+  display: block;
+  animation: fadeSlide 0.35s ease;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.lc-hero-banner {
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+  position: relative; overflow: hidden;
+}
+
+.lc-banner-0 { background: linear-gradient(135deg, #e0f4ff, #b8e6ff, #7ed0f7); }
+.lc-banner-1 { background: linear-gradient(135deg, #fff8e0, #fde68a, #fbbf24); }
+.lc-banner-2 { background: linear-gradient(135deg, #e8fdf0, #6ee7b7, #34d399); }
+.lc-banner-3 { background: linear-gradient(135deg, #f3e8ff, #c4b5fd, #a78bfa); }
+.lc-banner-4 { background: linear-gradient(135deg, #fff1f2, #fda4af, #fb7185); }
+
+.lc-banner-emoji {
+  font-size: 5rem;
+  position: absolute; right: 2rem; bottom: 0;
+  opacity: 0.4;
+}
+
+.lc-banner-label {
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+.lc-banner-title {
+  font-family: 'Gmarket Sans', sans-serif;
+  font-size: 1.8rem; font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: var(--gray-800);
+}
+.lc-banner-sub { font-size: 0.9rem; opacity: 0.8; }
+
+.lc-keywords {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
+}
+
+.lc-kw {
+  padding: 0.35rem 0.875rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem; font-weight: 600;
+  background: rgba(255,255,255,0.6);
+  color: var(--gray-700);
+  backdrop-filter: blur(4px);
+}
+
+/* Topic grid */
+.topic-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0.875rem;
+}
+
+.topic-card {
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  border: 1.5px solid var(--gray-100);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.topic-card:hover {
+  border-color: var(--sky-200);
+  background: var(--sky-100);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.tc-icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+.tc-title { font-size: 0.9rem; font-weight: 700; color: var(--gray-700); margin-bottom: 0.25rem; }
+.tc-count { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ============================
+   MATERIALS SECTION
+============================ */
+.materials-section {
+  background: var(--gray-50);
+}
+
+.materials-toolbar {
+  display: flex; gap: 1rem; align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.search-wrap {
+  flex: 1; min-width: 260px;
+  display: flex; align-items: center; gap: 0.6rem;
+  background: white;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 0.7rem 1.1rem;
+  transition: border-color 0.2s;
+}
+.search-wrap:focus-within { border-color: var(--sky-400); }
+.search-wrap svg { color: var(--text-muted); flex-shrink: 0; }
+.search-wrap input {
+  border: none; outline: none;
+  font-family: inherit; font-size: 0.9rem;
+  color: var(--text-primary);
+  width: 100%;
+}
+.search-wrap input::placeholder { color: var(--text-muted); }
+
+.filter-row {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+}
+
+.filter-chip {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--gray-200);
+  background: white;
+  color: var(--text-secondary);
+  font-size: 0.82rem; font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: inherit;
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.filter-chip:hover { border-color: var(--sky-300); color: var(--sky-600); }
+.filter-chip.on {
+  background: var(--sky-500);
+  border-color: var(--sky-500);
+  color: white;
+  box-shadow: var(--shadow-sky);
+}
+
+/* Upload banner */
+.upload-banner {
+  background: linear-gradient(135deg, var(--sky-500), var(--sky-700));
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.5rem;
+  display: flex; align-items: center; gap: 2rem;
+  margin-bottom: 2rem;
+  color: white;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.upload-banner:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(14,165,233,0.35); }
+
+.upload-banner-bg {
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07));
+}
+
+.ub-icon {
+  width: 64px; height: 64px;
+  background: rgba(255,255,255,0.2);
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; flex-shrink: 0;
+}
+.ub-text { flex: 1; }
+.ub-title { font-family: 'Gmarket Sans', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; }
+.ub-sub { font-size: 0.85rem; opacity: 0.85; }
+.ub-formats {
+  display: flex; gap: 0.4rem; margin-top: 0.75rem; flex-wrap: wrap;
+}
+.ub-fmt {
+  background: rgba(255,255,255,0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem; font-weight: 700;
+}
+
+/* Materials grid */
+.mat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.mat-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1.5px solid var(--gray-100);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.mat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--sky-200);
+}
+
+.mat-thumb {
+  height: 148px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4.5rem;
+  position: relative;
+}
+.mth-sky { background: linear-gradient(135deg, #e0f4ff, #b8e6ff); }
+.mth-green { background: linear-gradient(135deg, #e8fdf0, #6ee7b7); }
+.mth-sun { background: linear-gradient(135deg, #fff8e0, #fde68a); }
+.mth-purple { background: linear-gradient(135deg, #f3e8ff, #c4b5fd); }
+
+.mat-type-tag {
+  position: absolute; top: 0.875rem; left: 0.875rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.04em;
+  background: white;
+  color: var(--gray-600);
+  box-shadow: var(--shadow-sm);
+}
+
+.mat-new-badge {
+  position: absolute; top: 0.875rem; right: 0.875rem;
+  background: var(--coral-500);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.65rem; font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.mat-body { padding: 1.25rem; }
+
+.mat-lifecycle-tag {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.73rem; font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.65rem;
+}
+.mlt-sky { background: var(--sky-100); color: var(--sky-600); }
+.mlt-sun { background: var(--sun-100); color: #92400e; }
+.mlt-green { background: var(--green-100); color: var(--green-600); }
+.mlt-purple { background: #f3e8ff; color: #7c3aed; }
+
+.mat-title {
+  font-weight: 700; font-size: 0.95rem;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mat-meta {
+  display: flex; align-items: center; gap: 0.75rem;
+  color: var(--text-muted); font-size: 0.78rem;
+  margin-bottom: 1rem;
+}
+
+.mat-actions {
+  display: flex; gap: 0.5rem;
+}
+
+.mat-dl-btn {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 0.625rem;
+  background: linear-gradient(135deg, var(--sky-400), var(--sky-600));
+  color: white;
+  border: none; border-radius: var(--radius-md);
+  font-family: inherit; font-size: 0.82rem; font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mat-dl-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sky); }
+
+.mat-save-btn {
+  width: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--gray-50);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+.mat-save-btn:hover { border-color: var(--coral-400); background: #fff1f2; }
+
+/* ============================
+   LESSON BUILDER SECTION
+============================ */
+.lesson-section {
+  background: white;
+}
+
+.lesson-inner {
+  display: grid; grid-template-columns: 1fr 1.1fr;
+  gap: 3rem; align-items: start;
+}
+
+.lesson-form-card {
+  background: var(--gray-50);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  border: 1.5px solid var(--gray-100);
+}
+
+.form-group { margin-bottom: 1.25rem; }
+.form-label {
+  display: block;
+  font-size: 0.82rem; font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.form-select, .form-input, .form-textarea {
+  width: 100%;
+  background: white;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-family: inherit; font-size: 0.9rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+.form-select:focus, .form-input:focus, .form-textarea:focus {
+  border-color: var(--sky-400);
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.1);
+}
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+.form-textarea { min-height: 90px; resize: vertical; }
+
+.obj-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+.obj-btn {
+  padding: 0.5rem 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--gray-200);
+  background: white;
+  color: var(--text-secondary);
+  font-family: inherit; font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; text-align: center;
+  transition: all 0.2s;
+}
+.obj-btn:hover { border-color: var(--sky-300); color: var(--sky-600); }
+.obj-btn.sel {
+  background: var(--sky-100);
+  border-color: var(--sky-400);
+  color: var(--sky-600);
+}
+
+.lesson-generate-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--sun-400), var(--sun-500));
+  color: white;
+  border: none; border-radius: var(--radius-lg);
+  font-family: 'Gmarket Sans', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-top: 0.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  box-shadow: var(--shadow-sun);
+}
+.lesson-generate-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(245,158,11,0.4);
+}
+
+/* Result panel */
+.lesson-result-panel {
+  position: sticky; top: 88px;
+}
+
+.result-card {
+  background: var(--gray-50);
+  border: 1.5px solid var(--gray-100);
+  border-radius: var(--radius-xl);
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.result-empty {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  height: 100%; min-height: 480px;
+}
+.result-empty-icon { font-size: 4rem; margin-bottom: 1.25rem; opacity: 0.4; }
+.result-empty-title { font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; }
+.result-empty-sub { font-size: 0.85rem; color: var(--text-muted); }
+
+.result-loading {
+  display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  padding: 4rem 2rem; text-align: center; min-height: 480px;
+}
+.result-loading.show { display: flex; }
+
+.loading-ring {
+  width: 64px; height: 64px;
+  border: 4px solid var(--sky-100);
+  border-top-color: var(--sky-400);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1.25rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.result-content {
+  display: none; padding: 0;
+}
+.result-content.show { display: block; }
+
+.result-header {
+  background: linear-gradient(135deg, var(--sun-400), var(--sun-500));
+  padding: 1.5rem;
+  color: white;
+}
+.result-header-label { font-size: 0.75rem; font-weight: 700; opacity: 0.85; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+.result-header-title { font-family: 'Gmarket Sans', sans-serif; font-size: 1.15rem; font-weight: 700; }
+.result-header-meta { font-size: 0.82rem; opacity: 0.85; margin-top: 0.2rem; }
+
+.result-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+
+.result-step {
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--gray-100);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.result-step:hover { border-color: var(--sky-200); box-shadow: var(--shadow-sm); }
+
+.result-step-header {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.875rem 1rem;
+}
+.rs-step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 800;
+  flex-shrink: 0;
+}
+.rsn-sky { background: var(--sky-100); color: var(--sky-600); }
+.rsn-green { background: var(--green-100); color: var(--green-600); }
+.rsn-sun { background: var(--sun-100); color: #92400e; }
+.rsn-purple { background: #f3e8ff; color: #7c3aed; }
+.rsn-coral { background: #fff1f2; color: var(--coral-500); }
+
+.rs-title { font-size: 0.875rem; font-weight: 700; color: var(--gray-700); flex: 1; }
+.rs-time { font-size: 0.75rem; color: var(--text-muted); }
+
+.result-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--gray-100);
+  display: flex; gap: 0.75rem;
+}
+
+/* ============================
+   TEACHER TIPS SECTION
+============================ */
+.tips-section {
+  background: linear-gradient(160deg, #f0f9ff, #e8fdf0);
+  padding: 5rem 2rem;
+}
+
+.tips-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 3rem;
+}
+
+.tip-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  border: 1.5px solid var(--gray-100);
+  transition: all 0.25s;
+  position: relative; overflow: hidden;
+}
+.tip-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
+
+.tip-card-accent {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+.ta-sky { background: linear-gradient(90deg, var(--sky-400), var(--sky-300)); }
+.ta-sun { background: linear-gradient(90deg, var(--sun-400), var(--sun-300)); }
+.ta-green { background: linear-gradient(90deg, var(--green-400), var(--green-300)); }
+
+.tip-icon {
+  width: 52px; height: 52px; border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 1rem;
+}
+.ti-sky { background: var(--sky-100); }
+.ti-sun { background: var(--sun-100); }
+.ti-green { background: var(--green-100); }
+
+.tip-title { font-family: 'Gmarket Sans', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--gray-700); margin-bottom: 0.5rem; }
+.tip-desc { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.75; }
+.tip-count { margin-top: 1rem; font-size: 0.8rem; font-weight: 700; color: var(--sky-500); }
+
+/* ============================
+   FOOTER
+============================ */
+footer {
+  background: var(--gray-800);
+  color: var(--gray-400);
+  padding: 4rem 2rem 2rem;
+}
+
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-logo {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.footer-logo-icon {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--sky-400), var(--sky-600));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.footer-logo-text {
+  font-family: 'Gmarket Sans', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  color: white;
+}
+.footer-logo-text span { color: var(--sun-400); }
+
+.footer-desc { font-size: 0.85rem; line-height: 1.75; max-width: 280px; }
+
+.footer-col h4 { color: white; font-size: 0.875rem; font-weight: 700; margin-bottom: 1rem; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-col ul li { font-size: 0.82rem; cursor: pointer; transition: color 0.18s; }
+.footer-col ul li:hover { color: white; }
+
+.footer-bottom {
+  max-width: 1280px; margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.78rem;
+}
+
+/* ============================
+   MODAL
+============================ */
+.overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(15,23,42,0.55);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+.overlay.open .modal-box { transform: scale(1) translateY(0); }
+
+.modal-box {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  width: 100%; max-width: 480px;
+  max-height: 90vh; overflow-y: auto;
+  transform: scale(0.95) translateY(20px);
+  transition: transform 0.25s ease;
+}
+
+.modal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1.75rem;
+}
+.modal-title { font-family: 'Gmarket Sans', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--gray-800); }
+.modal-close-btn {
+  width: 36px; height: 36px;
+  background: var(--gray-100); border: none; border-radius: 50%;
+  cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close-btn:hover { background: var(--gray-200); }
+
+/* Upload drop zone */
+.drop-zone {
+  border: 2px dashed var(--sky-300);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  text-align: center;
+  background: var(--sky-100);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1.5rem;
+}
+.drop-zone:hover { border-color: var(--sky-500); background: #e0f4ff; }
+.dz-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.dz-title { font-weight: 700; color: var(--gray-700); margin-bottom: 0.25rem; }
+.dz-sub { font-size: 0.82rem; color: var(--text-muted); }
+.dz-fmts { display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.75rem; flex-wrap: wrap; }
+.dz-fmt { background: white; padding: 0.2rem 0.6rem; border-radius: var(--radius-sm); font-size: 0.7rem; font-weight: 700; color: var(--sky-600); box-shadow: var(--shadow-sm); }
+
+/* ============================
+   TOAST
+============================ */
+.toast-wrap {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  display: flex; flex-direction: column-reverse; gap: 0.75rem;
+}
+
+.toast {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: var(--gray-800);
+  color: white;
+  padding: 0.875rem 1.25rem;
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem; font-weight: 500;
+  box-shadow: var(--shadow-xl);
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  max-width: 320px;
+}
+.toast.show { transform: translateX(0); opacity: 1; }
+.toast-icon { font-size: 1.1rem; }
+
+/* ============================
+   RESPONSIVE
+============================ */
+@media (max-width: 1024px) {
+  .lifecycle-section .container { flex-direction: column; gap: 2.5rem; }
+  .lifecycle-left { flex: none; width: 100%; }
+  .lifecycle-nav { flex-direction: row; overflow-x: auto; padding-bottom: 0.5rem; }
+  .lc-nav-btn { flex-shrink: 0; flex-direction: column; padding: 1rem; text-align: center; min-width: 100px; }
+  .lc-nav-btn::before { width: 100%; height: 4px; top: auto; bottom: 0; left: 0; right: 0; border-radius: 0 0 4px 4px; }
+  .lc-nav-text { display: none; }
+  .lc-panel-card.active { animation: none; }
+
+  .lesson-inner { grid-template-columns: 1fr; }
+  .lesson-result-panel { position: static; }
+  .tips-grid { grid-template-columns: 1fr 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .navbar { padding: 0 1rem; }
+  .nav-menu { display: none; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  section { padding: 3.5rem 1.25rem; }
+  .tips-grid { grid-template-columns: 1fr; }
+  .topic-grid { grid-template-columns: 1fr; }
+  .mat-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--sky-200); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sky-300); }
+</style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">🌿</div>
+    <span class="nav-logo-text">에코<span>에듀</span></span>
+  </a>
+  <ul class="nav-menu">
+    <li><a onclick="goTo('lifecycle')" class="active">🌱 생애주기 자료</a></li>
+    <li><a onclick="goTo('materials')">📁 자료실</a></li>
+    <li><a onclick="goTo('lesson')">✏️ 수업 설계</a></li>
+    <li><a onclick="goTo('tips')">💡 교사 팁</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn btn-outline" onclick="openModal('login')">로그인</button>
+    <button class="btn btn-sky" onclick="openModal('login')">무료 시작하기</button>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="home">
+  <div class="hero-shapes">
+    <div class="deco-dots"></div>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="hero-inner container">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        초중고 교사 전용 · 무료 교육 플랫폼
+      </div>
+      <h1 class="hero-title">
+        선생님의 환경수업,<br>
+        <span class="highlight-sky">생애주기별</span>로<br>
+        <span class="highlight-sun">더 쉽게</span> 준비하세요
+      </h1>
+      <p class="hero-desc">
+        유아부터 노년까지 — 발달 단계에 꼭 맞는 환경교육 자료를 제공하고,<br>
+        AI가 맞춤형 수업 계획서까지 자동으로 만들어드립니다.
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-sky btn-lg" onclick="goTo('materials')">📚 자료 탐색하기</button>
+        <button class="btn btn-white btn-lg" onclick="goTo('lesson')">✨ AI 수업 설계</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">1,309</span>
+          <span class="hero-stat-label">교육자료</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">4,280</span>
+          <span class="hero-stat-label">참여 교사</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">97%</span>
+          <span class="hero-stat-label">만족도</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div style="position:relative">
+        <div class="dashboard-preview">
+          <div class="dp-header">
+            <div class="dp-dots">
+              <div class="dp-dot dp-dot-red"></div>
+              <div class="dp-dot dp-dot-yellow"></div>
+              <div class="dp-dot dp-dot-green"></div>
+            </div>
+            <div class="dp-title">에코에듀 — 자료실</div>
+          </div>
+          <div class="dp-search">
+            <span>🔍</span>
+            <span>기후변화 수업 자료...</span>
+          </div>
+          <div class="lifecycle-track">
+            <div class="lc-mini lc-a active"><span class="lc-mini-icon">🍼</span><span class="lc-mini-label">영유아</span></div>
+            <div class="lc-mini lc-b"><span class="lc-mini-icon">🧒</span><span class="lc-mini-label">아동기</span></div>
+            <div class="lc-mini lc-c"><span class="lc-mini-icon">🧑‍🎓</span><span class="lc-mini-label">청소년</span></div>
+            <div class="lc-mini lc-d"><span class="lc-mini-icon">👨</span><span class="lc-mini-label">성인기</span></div>
+            <div class="lc-mini lc-e"><span class="lc-mini-icon">👴</span><span class="lc-mini-label">노년기</span></div>
+          </div>
+          <div class="dp-materials">
+            <div class="dp-mat-row">
+              <div class="dp-mat-icon mi-sky">🌍</div>
+              <div class="dp-mat-info">
+                <div class="dp-mat-name">기후변화 수업 슬라이드 (초5-6)</div>
+                <div class="dp-mat-meta">PPT · 다운로드 1,240회</div>
+              </div>
+              <button class="dp-dl-btn">⬇ 다운</button>
+            </div>
+            <div class="dp-mat-row">
+              <div class="dp-mat-icon mi-green">🌱</div>
+              <div class="dp-mat-info">
+                <div class="dp-mat-name">텃밭 생태 관찰 활동지 모음</div>
+                <div class="dp-mat-meta">PDF · 다운로드 892회</div>
+              </div>
+              <button class="dp-dl-btn">⬇ 다운</button>
+            </div>
+            <div class="dp-mat-row">
+              <div class="dp-mat-icon mi-sun">♻️</div>
+              <div class="dp-mat-info">
+                <div class="dp-mat-name">분리수거 놀이 카드 세트</div>
+                <div class="dp-mat-meta">ZIP · 다운로드 2,156회</div>
+              </div>
+              <button class="dp-dl-btn">⬇ 다운</button>
+            </div>
+          </div>
+        </div>
+        <div class="float-card float-card-1">
+          <div class="fc-dot"></div>
+          <span>AI 수업 설계 완료!</span>
+        </div>
+        <div class="float-card float-card-2">
+          <div class="fc2-num">+47</div>
+          <div class="fc2-label">오늘 업로드된 자료</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LIFECYCLE SECTION ========== -->
+<section class="lifecycle-section" id="lifecycle">
+  <div class="container">
+    <div class="lifecycle-left">
+      <div class="lifecycle-intro">
+        <div class="section-eyebrow eyebrow-sky">🌱 생애주기별 커리큘럼</div>
+        <h2 class="section-title">발달 단계에 딱 맞는<br>환경교육</h2>
+        <p class="section-subtitle">각 연령대의 인지·정서 발달을 반영한<br>체계적인 환경교육 자료를 탐색하세요.</p>
+        <div class="lc-count-badge">📚 총 1,309개 교육자료 보유</div>
+      </div>
+      <div class="lifecycle-nav" id="lcNav">
+        <button class="lc-nav-btn lc-0 active" onclick="selectLC(0)">
+          <div class="lc-nav-icon">🍼</div>
+          <div class="lc-nav-text">
+            <div class="lc-nav-name">영유아기</div>
+            <div class="lc-nav-age">0–5세</div>
+          </div>
+          <span class="lc-nav-count">248개</span>
+        </button>
+        <button class="lc-nav-btn lc-1" onclick="selectLC(1)">
+          <div class="lc-nav-icon">🧒</div>
+          <div class="lc-nav-text">
+            <div class="lc-nav-name">아동기</div>
+            <div class="lc-nav-age">6–12세</div>
+          </div>
+          <span class="lc-nav-count">412개</span>
+        </button>
+        <button class="lc-nav-btn lc-2" onclick="selectLC(2)">
+          <div class="lc-nav-icon">🧑‍🎓</div>
+          <div class="lc-nav-text">
+            <div class="lc-nav-name">청소년기</div>
+            <div class="lc-nav-age">13–18세</div>
+          </div>
+          <span class="lc-nav-count">367개</span>
+        </button>
+        <button class="lc-nav-btn lc-3" onclick="selectLC(3)">
+          <div class="lc-nav-icon">👨‍💼</div>
+          <div class="lc-nav-text">
+            <div class="lc-nav-name">성인기</div>
+            <div class="lc-nav-age">19–64세</div>
+          </div>
+          <span class="lc-nav-count">195개</span>
+        </button>
+        <button class="lc-nav-btn lc-4" onclick="selectLC(4)">
+          <div class="lc-nav-icon">👴</div>
+          <div class="lc-nav-text">
+            <div class="lc-nav-name">노년기</div>
+            <div class="lc-nav-age">65세+</div>
+          </div>
+          <span class="lc-nav-count">87개</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="lifecycle-right">
+      <div class="lifecycle-panel">
+
+        <!-- Panel 0: 영유아기 -->
+        <div class="lc-panel-card active" id="lc-panel-0">
+          <div class="lc-hero-banner lc-banner-0">
+            <div class="lc-banner-emoji">🍼</div>
+            <div class="lc-banner-label">LIFECYCLE 01</div>
+            <div class="lc-banner-title">영유아기</div>
+            <div class="lc-banner-sub">감각으로 자연을 만나는 첫 번째 시간 · 0–5세</div>
+            <div class="lc-keywords">
+              <span class="lc-kw">감각 탐색</span>
+              <span class="lc-kw">자연물 놀이</span>
+              <span class="lc-kw">동물 친숙화</span>
+              <span class="lc-kw">물·흙 놀이</span>
+            </div>
+          </div>
+          <div class="topic-grid">
+            <div class="topic-card" onclick="toast('🌿 자연물 감각 탐색 자료를 불러옵니다')">
+              <div class="tc-icon">🌿</div>
+              <div class="tc-title">자연물 감각 탐색</div>
+              <div class="tc-count">48개 자료</div>
+            </div>
+            <div class="topic-card" onclick="toast('🦋 동식물 친숙화 자료를 불러옵니다')">
+              <div class="tc-icon">🦋</div>
+              <div class="tc-title">동식물 친숙화</div>
+              <div class="tc-count">62개 자료</div>
+            </div>
+            <div class="topic-card" onclick="toast('💧 물·흙 놀이 자료를 불러옵니다')">
+              <div class="tc-icon">💧</div>
+              <div class="tc-title">물·흙 놀이 활동</div>
+              <div class="tc-count">35개 자료</div>
+            </div>
+            <div class="topic-card" onclick="toast('📚 그림책 활용 자료를 불러옵니다')">
+              <div class="tc-icon">📚</div>
+              <div class="tc-title">그림책 활용 수업</div>
+              <div class="tc-count">103개 자료</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 1: 아동기 -->
+        <div class="lc-panel-card" id="lc-panel-1">
+          <div class="lc-hero-banner lc-banner-1">
+            <div class="lc-banner-emoji">🧒</div>
+            <div class="lc-banner-label">LIFECYCLE 02</div>
+            <div class="lc-banner-title">아동기</div>
+            <div class="lc-banner-sub">관찰하고 탐구하며 자연을 이해하는 시기 · 6–12세</div>
+            <div class="lc-keywords">
+              <span class="lc-kw">생태계 기초</span>
+              <span class="lc-kw">분리수거</span>
+              <span class="lc-kw">학교 텃밭</span>
+              <span class="lc-kw">에너지 절약</span>
+            </div>
+          </div>
+          <div class="topic-grid">
+            <div class="topic-card" onclick="toast('🌱 생태계 기초 자료를 불러옵니다')"><div class="tc-icon">🌱</div><div class="tc-title">생태계 기초 이해</div><div class="tc-count">87개 자료</div></div>
+            <div class="topic-card" onclick="toast('♻️ 분리수거 자료를 불러옵니다')"><div class="tc-icon">♻️</div><div class="tc-title">분리수거·재활용</div><div class="tc-count">56개 자료</div></div>
+            <div class="topic-card" onclick="toast('🌻 학교 텃밭 자료를 불러옵니다')"><div class="tc-icon">🌻</div><div class="tc-title">학교 텃밭 가꾸기</div><div class="tc-count">44개 자료</div></div>
+            <div class="topic-card" onclick="toast('⚡ 에너지 절약 자료를 불러옵니다')"><div class="tc-icon">⚡</div><div class="tc-title">에너지 절약</div><div class="tc-count">73개 자료</div></div>
+          </div>
+        </div>
+
+        <!-- Panel 2: 청소년기 -->
+        <div class="lc-panel-card" id="lc-panel-2">
+          <div class="lc-hero-banner lc-banner-2">
+            <div class="lc-banner-emoji">🧑‍🎓</div>
+            <div class="lc-banner-label">LIFECYCLE 03</div>
+            <div class="lc-banner-title">청소년기</div>
+            <div class="lc-banner-sub">비판적 사고로 환경 문제를 탐구하는 시기 · 13–18세</div>
+            <div class="lc-keywords">
+              <span class="lc-kw">기후변화 과학</span>
+              <span class="lc-kw">환경 정책</span>
+              <span class="lc-kw">탄소발자국</span>
+              <span class="lc-kw">지속가능성</span>
+            </div>
+          </div>
+          <div class="topic-grid">
+            <div class="topic-card" onclick="toast('🌡️ 기후변화 자료를 불러옵니다')"><div class="tc-icon">🌡️</div><div class="tc-title">기후변화 과학</div><div class="tc-count">95개 자료</div></div>
+            <div class="topic-card" onclick="toast('📜 환경 정책 자료를 불러옵니다')"><div class="tc-icon">📜</div><div class="tc-title">환경 정책 토론</div><div class="tc-count">68개 자료</div></div>
+            <div class="topic-card" onclick="toast('👣 탄소발자국 자료를 불러옵니다')"><div class="tc-icon">👣</div><div class="tc-title">탄소발자국 계산</div><div class="tc-count">42개 자료</div></div>
+            <div class="topic-card" onclick="toast('🌐 SDGs 자료를 불러옵니다')"><div class="tc-icon">🌐</div><div class="tc-title">SDGs 탐구</div><div class="tc-count">112개 자료</div></div>
+          </div>
+        </div>
+
+        <!-- Panel 3, 4 생략 — same structure -->
+        <div class="lc-panel-card" id="lc-panel-3">
+          <div class="lc-hero-banner lc-banner-3">
+            <div class="lc-banner-emoji">👨‍💼</div>
+            <div class="lc-banner-label">LIFECYCLE 04</div>
+            <div class="lc-banner-title">성인기</div>
+            <div class="lc-banner-sub">일상과 직장에서 실천하는 환경행동 · 19–64세</div>
+            <div class="lc-keywords"><span class="lc-kw">지속가능 소비</span><span class="lc-kw">직장 내 실천</span><span class="lc-kw">지역사회 참여</span></div>
+          </div>
+          <div class="topic-grid">
+            <div class="topic-card" onclick="toast('🛒 지속가능 소비 자료를 불러옵니다')"><div class="tc-icon">🛒</div><div class="tc-title">지속가능 소비</div><div class="tc-count">48개 자료</div></div>
+            <div class="topic-card" onclick="toast('🏢 직장 환경 자료를 불러옵니다')"><div class="tc-icon">🏢</div><div class="tc-title">직장 내 환경실천</div><div class="tc-count">37개 자료</div></div>
+            <div class="topic-card" onclick="toast('🤝 지역사회 자료를 불러옵니다')"><div class="tc-icon">🤝</div><div class="tc-title">지역사회 참여</div><div class="tc-count">56개 자료</div></div>
+            <div class="topic-card" onclick="toast('👶 부모 환경교육 자료를 불러옵니다')"><div class="tc-icon">👶</div><div class="tc-title">자녀와 함께하는 환경교육</div><div class="tc-count">54개 자료</div></div>
+          </div>
+        </div>
+
+        <div class="lc-panel-card" id="lc-panel-4">
+          <div class="lc-hero-banner lc-banner-4">
+            <div class="lc-banner-emoji">👴</div>
+            <div class="lc-banner-label">LIFECYCLE 05</div>
+            <div class="lc-banner-title">노년기</div>
+            <div class="lc-banner-sub">전통 자연 지식으로 세대를 잇는 환경교육 · 65세+</div>
+            <div class="lc-keywords"><span class="lc-kw">전통 자연 지식</span><span class="lc-kw">세대 간 전수</span><span class="lc-kw">치유 정원</span></div>
+          </div>
+          <div class="topic-grid">
+            <div class="topic-card" onclick="toast('🌾 전통 자연 자료를 불러옵니다')"><div class="tc-icon">🌾</div><div class="tc-title">전통 자연 지식</div><div class="tc-count">28개 자료</div></div>
+            <div class="topic-card" onclick="toast('🌸 치유 정원 자료를 불러옵니다')"><div class="tc-icon">🌸</div><div class="tc-title">치유 정원 가꾸기</div><div class="tc-count">19개 자료</div></div>
+            <div class="topic-card" onclick="toast('📖 구술 기록 자료를 불러옵니다')"><div class="tc-icon">📖</div><div class="tc-title">환경 구술 기록</div><div class="tc-count">22개 자료</div></div>
+            <div class="topic-card" onclick="toast('👨‍👩‍👧‍👦 세대 연결 자료를 불러옵니다')"><div class="tc-icon">👨‍👩‍👧‍👦</div><div class="tc-title">세대 간 환경 대화</div><div class="tc-count">18개 자료</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MATERIALS SECTION ========== -->
+<section class="materials-section" id="materials">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <div class="section-eyebrow eyebrow-green">📁 교육자료실</div>
+        <h2 class="section-title">자료 업로드 &amp; 다운로드</h2>
+        <p class="section-subtitle">교사들이 직접 제작한 검증된 환경교육 자료를 공유하세요</p>
+      </div>
+      <button class="btn btn-sky" onclick="openModal('upload')">📤 자료 업로드</button>
+    </div>
+
+    <!-- Upload Banner -->
+    <div class="upload-banner" onclick="openModal('upload')">
+      <div class="upload-banner-bg"></div>
+      <div class="ub-icon">📤</div>
+      <div class="ub-text">
+        <div class="ub-title">내가 만든 자료, 선생님들과 나눠요</div>
+        <div class="ub-sub">교원 인증 후 업로드하면 다운로드 수에 따라 포인트 적립!</div>
+        <div class="ub-formats">
+          <span class="ub-fmt">PDF</span><span class="ub-fmt">PPT</span><span class="ub-fmt">HWP</span><span class="ub-fmt">MP4</span><span class="ub-fmt">ZIP</span>
+          <span class="ub-fmt">최대 100MB</span>
+        </div>
+      </div>
+      <button class="btn btn-white" onclick="openModal('upload');event.stopPropagation()">업로드 시작 →</button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="materials-toolbar">
+      <div class="search-wrap">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="제목, 키워드, 교과 검색..." id="searchInput" oninput="filterMats()">
+      </div>
+      <div class="filter-row" id="filterRow">
+        <button class="filter-chip on" data-filter="all" onclick="setFilter(this, 'all')">전체</button>
+        <button class="filter-chip" data-filter="영유아기" onclick="setFilter(this, '영유아기')">🍼 영유아기</button>
+        <button class="filter-chip" data-filter="아동기" onclick="setFilter(this, '아동기')">🧒 아동기</button>
+        <button class="filter-chip" data-filter="청소년기" onclick="setFilter(this, '청소년기')">🧑‍🎓 청소년기</button>
+        <button class="filter-chip" data-filter="성인기" onclick="setFilter(this, '성인기')">👨 성인기</button>
+      </div>
+    </div>
+
+    <!-- Materials Grid -->
+    <div class="mat-grid" id="matGrid"></div>
+  </div>
+</section>
+
+<!-- ========== LESSON BUILDER SECTION ========== -->
+<section class="lesson-section" id="lesson">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:3rem;">
+      <div class="section-eyebrow eyebrow-sun">✨ AI 수업 설계 도우미</div>
+      <h2 class="section-title">클릭 몇 번으로<br>완성되는 수업 계획서</h2>
+      <p class="section-subtitle">학년·주제·목표를 설정하면 AI가 맞춤형 수업 계획서를 자동 생성합니다</p>
+    </div>
+
+    <div class="lesson-inner">
+      <div>
+        <div class="lesson-form-card">
+          <div class="form-group">
+            <label class="form-label">👤 대상 학년 선택</label>
+            <select class="form-select" id="selGrade">
+              <option value="">— 학년 선택 —</option>
+              <option>유치원 (5–7세)</option>
+              <option>초등 1–2학년</option>
+              <option>초등 3–4학년</option>
+              <option>초등 5–6학년</option>
+              <option>중학교 1학년</option>
+              <option>중학교 2–3학년</option>
+              <option>고등학교 1학년</option>
+              <option>고등학교 2–3학년</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🌿 환경교육 주제</label>
+            <select class="form-select" id="selTopic">
+              <option value="">— 주제 선택 —</option>
+              <option>기후변화와 지구온난화</option>
+              <option>생물다양성과 생태계</option>
+              <option>자원 순환과 재활용</option>
+              <option>대기·수질 오염 이해</option>
+              <option>지속가능한 소비 생활</option>
+              <option>에너지 절약과 신재생에너지</option>
+              <option>도시 생태 탐험</option>
+              <option>해양 환경 보호</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">⏱ 수업 시수</label>
+            <select class="form-select" id="selTime">
+              <option>1차시 (40분)</option>
+              <option>2차시 (80분)</option>
+              <option>3차시 블록</option>
+              <option>프로젝트 학습 (5차시+)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🎯 핵심 학습 목표 (복수 선택)</label>
+            <div class="obj-grid" id="objGrid">
+              <button class="obj-btn sel" onclick="this.classList.toggle('sel')">지식 이해</button>
+              <button class="obj-btn" onclick="this.classList.toggle('sel')">태도 함양</button>
+              <button class="obj-btn" onclick="this.classList.toggle('sel')">실천 행동</button>
+              <button class="obj-btn" onclick="this.classList.toggle('sel')">비판적 사고</button>
+              <button class="obj-btn" onclick="this.classList.toggle('sel')">창의적 해결</button>
+              <button class="obj-btn" onclick="this.classList.toggle('sel')">협력·토론</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">📝 특별 요청사항</label>
+            <textarea class="form-textarea" placeholder="예: 야외 활동 포함, 모둠 토론 중심, 실험 활동 위주..."></textarea>
+          </div>
+          <button class="lesson-generate-btn" onclick="generateLesson()">
+            ✨ 수업 계획서 자동 생성
+          </button>
+        </div>
+      </div>
+
+      <div class="lesson-result-panel">
+        <div class="result-card" id="resultCard">
+          <!-- Empty state -->
+          <div class="result-empty" id="resultEmpty">
+            <div class="result-empty-icon">📋</div>
+            <div class="result-empty-title">수업 계획서가 여기에 나타납니다</div>
+            <div class="result-empty-sub">왼쪽에서 조건을 선택하고 버튼을 눌러보세요</div>
+          </div>
+          <!-- Loading -->
+          <div class="result-loading" id="resultLoading">
+            <div class="loading-ring"></div>
+            <div style="font-weight:700;color:var(--gray-600);margin-bottom:0.5rem">AI가 수업 계획서를 작성하는 중...</div>
+            <div style="font-size:0.85rem;color:var(--text-muted)">발달 단계와 교육과정을 분석합니다</div>
+          </div>
+          <!-- Result -->
+          <div class="result-content" id="resultContent">
+            <div class="result-header" id="resultHeader"></div>
+            <div class="result-body" id="resultBody"></div>
+            <div class="result-footer">
+              <button class="btn btn-sky" style="flex:1; justify-content:center" onclick="toast('📄 PDF 저장이 완료되었습니다!')">📄 PDF 저장</button>
+              <button class="btn btn-outline" style="flex:1; justify-content:center" onclick="toast('📋 클립보드에 복사되었습니다!')">📋 복사하기</button>
+              <button class="btn" style="background:var(--gray-100);color:var(--gray-600);flex:1;justify-content:center" onclick="toast('💾 저장되었습니다!')">💾 저장</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TIPS SECTION ========== -->
+<section class="tips-section" id="tips">
+  <div class="container">
+    <div style="text-align:center;">
+      <div class="section-eyebrow eyebrow-green">💡 교사 가이드</div>
+      <h2 class="section-title">환경수업, 이렇게 시작하세요</h2>
+      <p class="section-subtitle">현장 교사들이 검증한 환경교육 노하우</p>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-card-accent ta-sky"></div>
+        <div class="tip-icon ti-sky">📚</div>
+        <div class="tip-title">자료 탐색부터 시작</div>
+        <div class="tip-desc">생애주기 탭에서 학년에 맞는 주제를 선택하고, 검색으로 원하는 자료를 빠르게 찾으세요. 즐겨찾기로 수업별 자료 묶음을 만들 수 있어요.</div>
+        <div class="tip-count">→ 자료실 바로가기</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-accent ta-sun"></div>
+        <div class="tip-icon ti-sun">✨</div>
+        <div class="tip-title">AI로 수업 계획서 초안 작성</div>
+        <div class="tip-desc">학년과 주제만 선택하면 학습 목표, 도입-전개-정리, 평가 기준까지 완성된 초안이 생성됩니다. 수업에 맞게 수정하여 바로 사용하세요.</div>
+        <div class="tip-count" style="color:var(--sun-500)">→ AI 수업 설계 시작</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-accent ta-green"></div>
+        <div class="tip-icon ti-green">🤝</div>
+        <div class="tip-title">다른 선생님과 공유</div>
+        <div class="tip-desc">직접 만든 자료를 업로드하고, 전국 4,280명 교사들의 생생한 수업 사례를 커뮤니티에서 확인하세요. 함께 성장하는 환경교육 공동체입니다.</div>
+        <div class="tip-count" style="color:var(--green-500)">→ 커뮤니티 참여</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon">🌿</div>
+        <span class="footer-logo-text">에코<span>에듀</span></span>
+      </div>
+      <div class="footer-desc">생애주기별 환경교육 교육자료 개발 프로젝트<br>교사와 학생이 함께 만드는 지속가능한 미래</div>
+    </div>
+    <div class="footer-col">
+      <h4>서비스</h4>
+      <ul>
+        <li>생애주기별 자료</li>
+        <li>교육자료실</li>
+        <li>AI 수업 설계</li>
+        <li>교사 커뮤니티</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>지원</h4>
+      <ul>
+        <li>자료 제출 가이드</li>
+        <li>이용 약관</li>
+        <li>개인정보 처리방침</li>
+        <li>문의하기</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>기관</h4>
+      <ul>
+        <li>주관 기관</li>
+        <li>협력 학교</li>
+        <li>연구진 소개</li>
+        <li>보도자료</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 에코에듀 — 생애주기별 환경교육 통합 플랫폼</span>
+    <span style="color:var(--sky-400)">🌍 지구를 위한 교육</span>
+  </div>
+</footer>
+
+<!-- ========== MODALS ========== -->
+<!-- Upload Modal -->
+<div class="overlay" id="overlay-upload" onclick="closeOverlayOut(event,'upload')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">📤 자료 업로드</div>
+      <button class="modal-close-btn" onclick="closeModal('upload')">✕</button>
+    </div>
+    <div class="drop-zone">
+      <div class="dz-icon">📁</div>
+      <div class="dz-title">파일을 여기에 드래그하거나 클릭하세요</div>
+      <div class="dz-sub">한 번에 여러 파일 업로드 가능</div>
+      <div class="dz-fmts">
+        <span class="dz-fmt">PDF</span><span class="dz-fmt">PPT</span><span class="dz-fmt">HWP</span><span class="dz-fmt">MP4</span><span class="dz-fmt">ZIP</span><span class="dz-fmt">최대 100MB</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0.875rem;margin-bottom:1.5rem">
+      <div>
+        <div class="form-label">자료 제목 *</div>
+        <input class="form-input" placeholder="자료 제목을 입력하세요">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+        <div>
+          <div class="form-label">생애주기 *</div>
+          <select class="form-select"><option>영유아기 (0–5세)</option><option>아동기 (6–12세)</option><option>청소년기 (13–18세)</option><option>성인기</option><option>노년기</option></select>
+        </div>
+        <div>
+          <div class="form-label">자료 유형 *</div>
+          <select class="form-select"><option>PPT/슬라이드</option><option>PDF 문서</option><option>활동지</option><option>영상</option><option>기타</option></select>
+        </div>
+      </div>
+      <div>
+        <div class="form-label">태그 (쉼표로 구분)</div>
+        <input class="form-input" placeholder="예: 기후변화, 초등, 프로젝트 수업">
+      </div>
+    </div>
+    <button class="btn btn-sky btn-lg" style="width:100%;justify-content:center" onclick="closeModal('upload');toast('✅ 자료가 성공적으로 업로드되었습니다!')">업로드 완료</button>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="overlay" id="overlay-login" onclick="closeOverlayOut(event,'login')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">🌿 교사 로그인</div>
+      <button class="modal-close-btn" onclick="closeModal('login')">✕</button>
+    </div>
+    <div style="text-align:center;padding:1rem 0 2rem">
+      <div style="width:72px;height:72px;background:linear-gradient(135deg,var(--sky-100),var(--sky-200));border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1rem">🌱</div>
+      <p style="color:var(--text-muted);font-size:0.875rem">교원 인증 후 모든 자료를 무료로 이용하세요</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.25rem">
+      <input class="form-input" placeholder="이메일 주소">
+      <input class="form-input" type="password" placeholder="비밀번호">
+    </div>
+    <button class="btn btn-sky btn-lg" style="width:100%;justify-content:center" onclick="closeModal('login');toast('👋 환영합니다, 선생님!')">로그인</button>
+    <div style="text-align:center;margin-top:1.25rem;font-size:0.82rem;color:var(--text-muted)">
+      아직 계정이 없으신가요? <span style="color:var(--sky-500);cursor:pointer;font-weight:700">교사 회원가입</span>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ========== SCRIPT ========== -->
+<script>
+// Materials data
+const MATS = [
+  { id:1, emoji:'🌍', bg:'mth-sky', type:'PPT', lc:'청소년기', lcClass:'mlt-green', title:'기후변화를 막아라! — 중학교 1학년 통합과학 연계 수업 슬라이드', author:'김환경', dl:1240, date:'25.01.15', isNew:false },
+  { id:2, emoji:'🦋', bg:'mth-sun', type:'활동지', lc:'영유아기', lcClass:'mlt-sky', title:'나비와 꽃 — 생명의 연결 관찰 활동지 세트 (유아용)', author:'이새싹', dl:892, date:'25.01.12', isNew:true },
+  { id:3, emoji:'♻️', bg:'mth-green', type:'영상', lc:'아동기', lcClass:'mlt-sun', title:'분리수거 탐정단 — 초등 저학년 애니메이션 교육 영상 (15분)', author:'박지구', dl:2156, date:'25.01.10', isNew:false },
+  { id:4, emoji:'🌊', bg:'mth-purple', type:'PDF', lc:'청소년기', lcClass:'mlt-green', title:'우리 마을 하천 수질 조사 — 중학교 프로젝트 학습 가이드북', author:'최환경', dl:634, date:'25.01.08', isNew:false },
+  { id:5, emoji:'🌻', bg:'mth-sun', type:'활동지', lc:'영유아기', lcClass:'mlt-sky', title:'씨앗부터 꽃까지 — 유아 성장 관찰 일기장 (계절별)', author:'정자연', dl:1876, date:'25.01.05', isNew:true },
+  { id:6, emoji:'⚡', bg:'mth-sky', type:'PPT', lc:'아동기', lcClass:'mlt-sun', title:'에너지 절약 슈퍼히어로 — 초등 3-4학년 창체 수업 자료', author:'강에너지', dl:743, date:'25.01.03', isNew:false },
+];
+
+let currentFilter = 'all';
+
+function renderMats(data) {
+  const grid = document.getElementById('matGrid');
+  if (!data.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-muted)">검색 결과가 없습니다</div>'; return; }
+  grid.innerHTML = data.map(m => `
+    <div class="mat-card">
+      <div class="mat-thumb ${m.bg}">
+        <span>${m.emoji}</span>
+        <span class="mat-type-tag">${m.type}</span>
+        ${m.isNew ? '<span class="mat-new-badge">NEW</span>' : ''}
+      </div>
+      <div class="mat-body">
+        <div class="mat-lifecycle-tag ${m.lcClass}">${m.lc}</div>
+        <div class="mat-title">${m.title}</div>
+        <div class="mat-meta">
+          <span>👤 ${m.author}</span>
+          <span>⬇️ ${m.dl.toLocaleString()}</span>
+          <span>${m.date}</span>
+        </div>
+        <div class="mat-actions">
+          <button class="mat-dl-btn" onclick="toast('⬇️ 다운로드가 시작됩니다!')">⬇️ 다운로드</button>
+          <button class="mat-save-btn" onclick="toast('🔖 자료를 저장했습니다!')">🔖</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderMats(MATS);
+
+function setFilter(el, filter) {
+  document.querySelectorAll('#filterRow .filter-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  currentFilter = filter;
+  filterMats();
+}
+
+function filterMats() {
+  const q = document.getElementById('searchInput').value.trim();
+  let data = MATS;
+  if (currentFilter !== 'all') data = data.filter(m => m.lc === currentFilter);
+  if (q) data = data.filter(m => m.title.includes(q) || m.author.includes(q) || m.lc.includes(q));
+  renderMats(data);
+}
+
+// Lifecycle tabs
+function selectLC(idx) {
+  document.querySelectorAll('.lc-nav-btn').forEach((b,i) => b.classList.toggle('active', i === idx));
+  document.querySelectorAll('.lc-panel-card').forEach((p,i) => p.classList.toggle('active', i === idx));
+}
+
+// Lesson builder
+function generateLesson() {
+  const grade = document.getElementById('selGrade').value || '초등 5–6학년';
+  const topic = document.getElementById('selTopic').value || '기후변화와 지구온난화';
+  const time = document.getElementById('selTime').value;
+
+  document.getElementById('resultEmpty').style.display = 'none';
+  document.getElementById('resultContent').classList.remove('show');
+  document.getElementById('resultLoading').classList.add('show');
+
+  setTimeout(() => {
+    document.getElementById('resultLoading').classList.remove('show');
+
+    const header = document.getElementById('resultHeader');
+    header.innerHTML = `
+      <div class="result-header-label">📋 AI 생성 수업 계획서</div>
+      <div class="result-header-title">${grade} · ${topic}</div>
+      <div class="result-header-meta">${time} | 생성일: ${new Date().toLocaleDateString('ko-KR')}</div>
+    `;
+
+    const steps = [
+      { num:'①', color:'rsn-sky', title:'학습 목표 (3가지)', time:'', desc:'지식·태도·실천 목표 자동 생성' },
+      { num:'②', color:'rsn-green', title:'도입 활동', time:'5분', desc:'동기유발 영상 또는 질문 제시' },
+      { num:'③', color:'rsn-sun', title:'전개 — 핵심 학습', time:'25분', desc:'모둠 탐구 · 발표 활동' },
+      { num:'④', color:'rsn-purple', title:'정리 — 체험 활동', time:'8분', desc:'소감 나누기 · 실천 약속' },
+      { num:'⑤', color:'rsn-coral', title:'평가 기준표', time:'', desc:'과정 중심 평가 루브릭 포함' },
+    ];
+
+    document.getElementById('resultBody').innerHTML = steps.map(s => `
+      <div class="result-step">
+        <div class="result-step-header">
+          <div class="rs-step-num ${s.color}">${s.num}</div>
+          <div class="rs-title">${s.title}</div>
+          ${s.time ? `<div class="rs-time">⏱ ${s.time}</div>` : ''}
+        </div>
+        <div style="padding:0 1rem 0.875rem;font-size:0.82rem;color:var(--text-muted)">${s.desc}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('resultContent').classList.add('show');
+  }, 2000);
+}
+
+// Navigation
+function goTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Modals
+function openModal(name) {
+  document.getElementById('overlay-' + name).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(name) {
+  document.getElementById('overlay-' + name).classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeOverlayOut(e, name) {
+  if (e.target === e.currentTarget) closeModal(name);
+}
+
+// Toast
+let toastTimeout;
+function toast(msg) {
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<span class="toast-icon">${msg.slice(0,2)}</span><span>${msg.slice(2)}</span>`;
+  wrap.appendChild(t);
+  requestAnimationFrame(() => { requestAnimationFrame(() => { t.classList.add('show'); }); });
+  setTimeout(() => {
+    t.classList.remove('show');
+    setTimeout(() => t.remove(), 300);
+  }, 3000);
+}
+
+// Global alias
+window.toast = toast;
+</script>
+
+</body>
+</html>
